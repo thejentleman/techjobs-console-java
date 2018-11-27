@@ -52,19 +52,21 @@ public class TechJobs {
                     }
                 }
 
-            } else { // choice is "search"
+            }  else { // choice is "search"
 
                 // How does the user want to search (e.g. by skill or employer)
                 String searchField = getUserSelection("Search by:", columnChoices);
 
                 // What is their search term?
                 System.out.println("\nSearch term: ");
-                String searchTerm = in.nextLine();
+                String searchTerm = in.nextLine().toLowerCase();
 
+                // This is where you should put the findByValue Method in
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    // Will check to see if the key and value contain the search term
+                    printJobs(JobData.findByValue(searchTerm.toLowerCase()));
                 } else {
-                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
+                    printJobs(JobData.findByColumnAndValue(searchField.toLowerCase(), searchTerm.toLowerCase()));
                 }
             }
         }
@@ -111,18 +113,16 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
-        if (someJobs.size() >= 1) {
+        if (someJobs.size()==0)
+            System.out.println("There are no jobs available at this time");
+        else {
             for (int i = 0; i < someJobs.size(); i++) {
                 System.out.println("*****");
-
-                for (Map.Entry<String, String> job : someJobs.get(i).entrySet()) {
-                    System.out.println(job.getKey() + ": " + job.getValue());
+                for (Map.Entry<String, String> categories : someJobs.get(i).entrySet()) {
+                    System.out.println(categories.getKey() + ": " + categories.getValue());
                 }
-                System.out.println("*****");
-                System.out.println(" ");
+                System.out.println("*****\n");
             }
-        } else {
-            System.out.println("No results found, please try again");
         }
     }
 }
