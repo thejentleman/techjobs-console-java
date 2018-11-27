@@ -84,6 +84,22 @@ public class JobData {
         return jobs;
     }
 
+    public static ArrayList<HashMap<String, String>> findByValue (String searchTerm) {
+        loadData();
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        for (HashMap<String, String> row : allJobs) {
+            for (String fields : row.values()) {
+                if (fields.toLowerCase().contains(searchTerm)) {
+                    jobs.add(row);
+                    break;
+                }
+            }
+        }
+
+        return jobs;
+
+    }
+
     /**
      * Read in data from a CSV file and store it in a list
      */
